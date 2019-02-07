@@ -71,7 +71,7 @@ public class RelationGen extends VerdictSQLParserBaseVisitor<AbstractRelation> {
     }
 
     if (ctx.use_original_after_clause() != null) {
-      String useOrigAfterVal = ctx.use_original_after_clause().number().getText();
+      String useOrigAfterVal = ctx.use_original_after_clause().getText();
       
       sel.addUseOriginalAfter(
         ConstantColumn.valueOf(Float.parseFloat(useOrigAfterVal))

@@ -27,6 +27,7 @@ def read_version(pom):
     """ Reads the version from pom.xml file.
 
     Assumes that the version tag containing the verdictdb version appears first in the pom file.
+    TODO: make the regex more robust
     """
     with open(pom) as f:
         context = f.read()

@@ -427,7 +427,7 @@ limit_clause
     ;
 
 use_original_after_clause
-    : USE_ORIGINAL_AFTER number
+    : USE_ORIGINAL_AFTER FLOAT
     ;
 
 // https://msdn.microsoft.com/en-us/library/ms188385.aspx

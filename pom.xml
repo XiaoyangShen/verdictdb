@@ -386,7 +386,7 @@
                             </systemProperties>
                             <!-- This option seems to be only working for JDK7 -->
                             <!-- <forkMode>always</forkMode> -->
-                            <forkCount>1</forkCount>
+                            <forkCount>0</forkCount>
                             <reuseForks>false</reuseForks>
                             <argLine>-Xmx2048m -XX:MaxPermSize=512m</argLine>
                         </configuration>

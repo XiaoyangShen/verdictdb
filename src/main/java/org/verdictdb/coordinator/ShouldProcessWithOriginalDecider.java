@@ -34,7 +34,7 @@ public class ShouldProcessWithOriginalDecider {
   public ShouldProcessWithOriginalDecider(SelectQuery selectQuery, ScrambleMetaSet metaset) {
     Optional<ConstantColumn> useOriginalAfter = selectQuery.getUseOriginalAfter();
     if (useOriginalAfter.isPresent()) {
-      ratioToUseOriginalAfter = (float) useOriginalAfter.get().getValue();
+      ratioToUseOriginalAfter = Float.valueOf((String) useOriginalAfter.get().getValue());
     }
 
     this.metaset = metaset;

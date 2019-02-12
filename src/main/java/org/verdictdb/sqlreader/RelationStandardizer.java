@@ -569,6 +569,12 @@ public class RelationStandardizer {
     if (relationToAlias.getLimit().isPresent()) {
       AliasedRelation.addLimit(relationToAlias.getLimit().get());
     }
+
+    // Use_Original_After
+    if (relationToAlias.getUseOriginalAfter().isPresent()) {
+      AliasedRelation.addUseOriginalAfter(relationToAlias.getUseOriginalAfter().get());
+    }
+
     return AliasedRelation;
   }
 

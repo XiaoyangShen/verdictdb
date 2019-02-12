@@ -47,6 +47,12 @@ public class ConstantColumn implements UnnamedColumn, SelectItem {
     return c;
   }
 
+  public static ConstantColumn valueOf(float value) {
+    ConstantColumn c = new ConstantColumn();
+    c.setValue(Float.valueOf(value).toString());
+    return c;
+  }
+
   public static ConstantColumn valueOf(String value) {
     ConstantColumn c = new ConstantColumn();
     c.setValue(value);

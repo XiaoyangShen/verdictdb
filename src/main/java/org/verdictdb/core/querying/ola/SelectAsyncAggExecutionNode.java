@@ -160,6 +160,9 @@ public class SelectAsyncAggExecutionNode extends AsyncAggExecutionNode {
       SelectQuery query = ((CreateTableAsSelectQuery) super.createQuery(tokens)).getSelect();
       dbmsQueryResult = inMemoryAggregate.executeQuery(query);
 
+      // add covered blocks meta data
+      dbmsQueryResult.getMetaData().coveredCubes = aggMeta.getCubes();
+
 //      List<Boolean> isAggregated = new ArrayList<>();
 //      for (SelectItem sel : selectQuery.getSelectList()) {
 //        if (sel.isAggregateColumn()) {
@@ -184,10 +187,6 @@ public class SelectAsyncAggExecutionNode extends AsyncAggExecutionNode {
   @Override
   public ExecutionInfoToken createToken(DbmsQueryResult result) {
     ExecutionInfoToken token = super.createToken(result);
-
-    if (result != null) {
-      result.getMetaData().coveredCubes = coveredCubes;
-    }
 
     token.setKeyValue("queryResult", dbmsQueryResult);
 

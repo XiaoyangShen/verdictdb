@@ -31,7 +31,7 @@ public class ProjectionNode extends CreateTableAsSelectNode {
 
   private static final long serialVersionUID = 3168447303333633662L;
 
-  protected List<HyperTableCube> coveredCubes = new ArrayList<>();
+//  protected List<HyperTableCube> coveredCubes = new ArrayList<>();
 
   public ProjectionNode(IdCreator namer, SelectQuery query) {
     super(namer, query);
@@ -46,14 +46,14 @@ public class ProjectionNode extends CreateTableAsSelectNode {
 
   @Override
   public SqlConvertible createQuery(List<ExecutionInfoToken> tokens) throws VerdictDBException {
-    if (!tokens.isEmpty()) {
-      ExecutionInfoToken token = tokens.get(0);
-      if (token.containsKey("aggMeta")) {
-        coveredCubes.addAll(((AggMeta) token.getValue("aggMeta")).getCubes());
-      } else if (token.containsKey("coveredCubes")) {
-        coveredCubes.addAll((List<HyperTableCube>) token.getValue("coveredCubes"));
-      }
-    }
+//    if (!tokens.isEmpty()) {
+//      ExecutionInfoToken token = tokens.get(0);
+//      if (token.containsKey("aggMeta")) {
+//        coveredCubes.addAll(((AggMeta) token.getValue("aggMeta")).getCubes());
+//      } else if (token.containsKey("coveredCubes")) {
+//        coveredCubes.addAll((List<HyperTableCube>) token.getValue("coveredCubes"));
+//      }
+//    }
 
     return super.createQuery(tokens);
   }
@@ -62,7 +62,7 @@ public class ProjectionNode extends CreateTableAsSelectNode {
   public ExecutionInfoToken createToken(DbmsQueryResult result) {
     ExecutionInfoToken token = super.createToken(result);
 
-    token.setKeyValue("coveredCubes", coveredCubes);
+//    token.setKeyValue("coveredCubes", coveredCubes);
 
     return token;
   }

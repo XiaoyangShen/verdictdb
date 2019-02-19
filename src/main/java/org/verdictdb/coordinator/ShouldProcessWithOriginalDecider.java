@@ -34,7 +34,7 @@ public class ShouldProcessWithOriginalDecider {
   public ShouldProcessWithOriginalDecider(SelectQuery selectQuery, ScrambleMetaSet metaset) {
     Optional<ConstantColumn> useOriginalAfter = selectQuery.getUseOriginalAfter();
     if (useOriginalAfter.isPresent()) {
-      ratioToUseOriginalAfter = (float) useOriginalAfter.get().getValue();
+      ratioToUseOriginalAfter = Float.valueOf((String) useOriginalAfter.get().getValue());
     }
 
     this.metaset = metaset;
@@ -79,7 +79,7 @@ public class ShouldProcessWithOriginalDecider {
 
       Double probSubVal = 0.0;
       if (dim.getBegin() != 0) {
-        probSubVal = tierProbDistrib.get(dim.getBegin());
+        probSubVal = tierProbDistrib.get(dim.getBegin()-1);
       }
 
       result += tierProbDistrib.get(dim.getEnd()) - probSubVal;

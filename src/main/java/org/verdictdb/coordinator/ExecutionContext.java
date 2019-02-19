@@ -342,7 +342,7 @@ public class ExecutionContext {
         if (accEst.isLastResultAccurate()) {
           return rs;
         }
-        if (runWithOrigDecider.shouldRunOriginal(rs)) {
+        if (!runOriginalQuery && runWithOrigDecider.shouldRunOriginal(rs)) {
           stream.close();
           abort();
 

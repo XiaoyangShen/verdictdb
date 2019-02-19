@@ -79,7 +79,7 @@ public class ShouldProcessWithOriginalDecider {
 
       Double probSubVal = 0.0;
       if (dim.getBegin() != 0) {
-        probSubVal = tierProbDistrib.get(dim.getBegin());
+        probSubVal = tierProbDistrib.get(dim.getBegin()-1);
       }
 
       result += tierProbDistrib.get(dim.getEnd()) - probSubVal;

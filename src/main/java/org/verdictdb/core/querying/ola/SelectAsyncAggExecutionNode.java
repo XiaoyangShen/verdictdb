@@ -160,7 +160,7 @@ public class SelectAsyncAggExecutionNode extends AsyncAggExecutionNode {
       SelectQuery query = ((CreateTableAsSelectQuery) super.createQuery(tokens)).getSelect();
       dbmsQueryResult = inMemoryAggregate.executeQuery(query);
 
-      // add covered blocks meta data
+      // add metadata of covered fraction of cubes
       dbmsQueryResult.getMetaData().coveredFraction = aggMeta.getCoveredFraction();
 
 //      List<Boolean> isAggregated = new ArrayList<>();
@@ -187,7 +187,6 @@ public class SelectAsyncAggExecutionNode extends AsyncAggExecutionNode {
   @Override
   public ExecutionInfoToken createToken(DbmsQueryResult result) {
     ExecutionInfoToken token = super.createToken(result);
-
     token.setKeyValue("queryResult", dbmsQueryResult);
 
     // Addition check that the query is a query contains Asterisk column that without asyncAggExecutionNode.

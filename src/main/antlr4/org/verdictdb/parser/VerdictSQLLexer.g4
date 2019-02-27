@@ -13,7 +13,9 @@ SCRAMBLES:                       S C R A M B L E S;
 STREAM:                          S T R E A M;
 GET:                             G E T;
 APPEND:                          A P P E N D;
-
+COVERAGE:                        C O V E R A G E;
+ERROR:                           E R R O R;
+UNDER:                           U N D E R;
 
 
 // Basic keywords (from https://msdn.microsoft.com/en-us/library/ms189822.aspx)
@@ -215,7 +217,6 @@ UPDATE:                          U P D A T E;
 UPDATETEXT:                      U P D A T E T E X T;
 USE:                             U S E;
 USER:                            U S E R;
-USE_ORIGINAL_AFTER:              U S E '_' O R I G I N A L '_' A F T E R;
 VALUES:                          V A L U E S;
 VARYING:                         V A R Y I N G;
 VIEW:                            V I E W;

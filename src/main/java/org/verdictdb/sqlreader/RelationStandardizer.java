@@ -570,9 +570,14 @@ public class RelationStandardizer {
       AliasedRelation.addLimit(relationToAlias.getLimit().get());
     }
 
-    // Use_Original_After
-    if (relationToAlias.getUseOriginalAfter().isPresent()) {
-      AliasedRelation.addUseOriginalAfter(relationToAlias.getUseOriginalAfter().get());
+    // Coverage Under
+    if (relationToAlias.getCoverageThreshold().isPresent()) {
+      AliasedRelation.addCoverageThreshold(relationToAlias.getCoverageThreshold().get());
+    }
+
+    // Error Under
+    if (relationToAlias.getErrorThreshold().isPresent()) {
+      AliasedRelation.addErrorThreshold(relationToAlias.getErrorThreshold().get());
     }
 
     return AliasedRelation;

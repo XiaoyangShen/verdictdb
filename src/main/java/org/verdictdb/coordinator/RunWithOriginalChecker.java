@@ -20,18 +20,22 @@ import com.google.common.base.Optional;
 import org.verdictdb.VerdictSingleResult;
 import org.verdictdb.core.sqlobject.SelectQuery;
 import org.verdictdb.core.sqlobject.ConstantColumn;
+import org.verdictdb.exception.VerdictDBException;
 
-public class ShouldProcessWithOriginalDecider {
-  private float threshold = -1;
+public class RunWithOriginalChecker {
+  private double threshold = -1;
 
-  public ShouldProcessWithOriginalDecider(SelectQuery selectQuery) {
-    Optional<ConstantColumn> useOriginalAfter = selectQuery.getUseOriginalAfter();
-    if (useOriginalAfter.isPresent()) {
-      threshold = Float.valueOf((String) useOriginalAfter.get().getValue());
+  public RunWithOriginalChecker(SelectQuery selectQuery) throws VerdictDBException {
+    Optional<ConstantColumn> coverageThreshold = selectQuery.getCoverageThreshold();
+    if (coverageThreshold.isPresent()) {
+      threshold = Double.valueOf((String) coverageThreshold.get().getValue());
+      if (threshold < 0 || threshold > 1) {
+        throw new VerdictDBException("COVERAGE UNDER threshold must be between 0 and 1.");
+      }
     }
   }
 
-  public boolean shouldRunOriginal(VerdictSingleResult result) {
+  public boolean exceedThreshold(VerdictSingleResult result) {
     if (threshold == -1) {
       return false;
     }

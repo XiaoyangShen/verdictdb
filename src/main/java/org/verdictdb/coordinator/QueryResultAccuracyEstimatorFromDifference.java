@@ -6,9 +6,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.google.common.base.Optional;
 import org.verdictdb.VerdictSingleResult;
 import org.verdictdb.commons.TypeCasting;
 import org.verdictdb.core.sqlobject.*;
+import org.verdictdb.exception.VerdictDBException;
 
 /**
  * Estimates the difference based on the difference between two consequent result sets.
@@ -32,7 +34,7 @@ public class QueryResultAccuracyEstimatorFromDifference extends QueryResultAccur
   // the values of the result should be within [(1-valueError)*prevValue, (1+valueError)*prevValue]
   // of the previous result.
   // Otherwise, it will fetch next result.
-  private Double valueError = 0.00002;
+  private Double valueError = 0.02;
 
   // the #row of the result should be within  [(1-groupCountError)*prev#row,
   // (1+groupCountError)*prev#row] of the previous result.
@@ -51,9 +53,16 @@ public class QueryResultAccuracyEstimatorFromDifference extends QueryResultAccur
 //  private Set<Integer> groupingColumnIndexes = new HashSet<>();
   private Set<Integer> nongroupingColumnIndxes = new HashSet<>();
 
-  QueryResultAccuracyEstimatorFromDifference(SelectQuery originalQuery) {
+  QueryResultAccuracyEstimatorFromDifference(SelectQuery originalQuery) throws VerdictDBException {
     this.originalQuery = originalQuery;
 //    this.runningCoordinator = runningCoordinator;
+    Optional<ConstantColumn> ErrorThreshold = originalQuery.getErrorThreshold();
+    if (ErrorThreshold.isPresent()) {
+      valueError = Double.valueOf((String) ErrorThreshold.get().getValue());
+      if (valueError < 0 || valueError > 1) {
+        throw new VerdictDBException("ERROR UNDER threshold must be between 0 and 1.");
+      }
+    }
   }
   
   @Override

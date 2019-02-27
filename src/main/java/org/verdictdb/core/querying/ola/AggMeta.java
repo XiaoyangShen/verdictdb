@@ -150,7 +150,6 @@ public class AggMeta implements Serializable {
     for (HyperTableCube cube : cubes) {
       fraction += coveredFractionPerCube(cube, metaset);
     }
-    // TODO: check fraction is between 0 and 1
     return fraction;
   }
 

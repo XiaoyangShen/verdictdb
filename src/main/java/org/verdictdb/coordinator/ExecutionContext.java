@@ -330,8 +330,8 @@ public class ExecutionContext {
     QueryResultAccuracyEstimator accEst =
       new QueryResultAccuracyEstimatorFromDifference(selectQuery);
 
-    ShouldProcessWithOriginalDecider runWithOrigDecider = 
-      new ShouldProcessWithOriginalDecider(selectQuery);
+    RunWithOriginalChecker runWithOrigDecider =
+      new RunWithOriginalChecker(selectQuery);
 
     boolean haveCleanedUp = false;
 
@@ -342,7 +342,7 @@ public class ExecutionContext {
         if (accEst.isLastResultAccurate()) {
           return rs;
         }
-        if (!runOriginalQuery && runWithOrigDecider.shouldRunOriginal(rs)) {
+        if (!runOriginalQuery && runWithOrigDecider.exceedThreshold(rs)) {
           stream.close();
           abort();
 

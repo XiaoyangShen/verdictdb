@@ -87,7 +87,9 @@ public class SelectQuery extends AbstractRelation implements SqlConvertible {
 
   Optional<UnnamedColumn> limit = Optional.absent();
 
-  Optional<ConstantColumn> useOriginalAfter = Optional.absent();
+  Optional<ConstantColumn> coverageThreshold = Optional.absent();
+
+  Optional<ConstantColumn> errorThreshold = Optional.absent();
 
   //  Optional<String> attribute = Optional.absent();
 
@@ -164,8 +166,12 @@ public class SelectQuery extends AbstractRelation implements SqlConvertible {
     this.limit = Optional.of(limit);
   }
 
-  public void addUseOriginalAfter(ConstantColumn useOrigAfter) {
-    useOriginalAfter = Optional.of(useOrigAfter);
+  public void addCoverageThreshold(ConstantColumn coverage) {
+    coverageThreshold = Optional.of(coverage);
+  }
+
+  public void addErrorThreshold(ConstantColumn error) {
+    errorThreshold = Optional.of(error);
   }
 
   public void addOrderby(List<OrderbyAttribute> columns) {
@@ -200,8 +206,12 @@ public class SelectQuery extends AbstractRelation implements SqlConvertible {
     this.selectList = new ArrayList<>();
   }
 
-  public void clearUseOriginalAfter() {
-    this.useOriginalAfter = Optional.absent();
+  public void clearCoverageThreshold() {
+    this.coverageThreshold = Optional.absent();
+  }
+
+  public void clearErrorThreshold() {
+    this.errorThreshold = Optional.absent();
   }
 
   public List<SelectItem> getSelectList() {
@@ -232,8 +242,12 @@ public class SelectQuery extends AbstractRelation implements SqlConvertible {
     return orderby;
   }
 
-  public Optional<ConstantColumn> getUseOriginalAfter() {
-    return useOriginalAfter;
+  public Optional<ConstantColumn> getCoverageThreshold() {
+    return coverageThreshold;
+  }
+
+  public Optional<ConstantColumn> getErrorThreshold() {
+    return errorThreshold;
   }
 
   @Override

@@ -331,7 +331,7 @@ public class ExecutionContext {
       new QueryResultAccuracyEstimatorFromDifference(selectQuery);
 
     ShouldProcessWithOriginalDecider runWithOrigDecider = 
-      new ShouldProcessWithOriginalDecider(selectQuery, metaStore.retrieve());
+      new ShouldProcessWithOriginalDecider(selectQuery);
 
     boolean haveCleanedUp = false;
 

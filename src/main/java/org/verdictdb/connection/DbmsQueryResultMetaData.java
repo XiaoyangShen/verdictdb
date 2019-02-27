@@ -42,7 +42,7 @@ public class DbmsQueryResultMetaData implements Serializable {
 
   public List<Boolean> isAggregate = new ArrayList<>();
 
-  public List<HyperTableCube> coveredCubes = new ArrayList<>();
+  public double coveredFraction = 0.0;
 
   public DbmsQueryResultMetaData() {}
 

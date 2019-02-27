@@ -161,7 +161,7 @@ public class SelectAsyncAggExecutionNode extends AsyncAggExecutionNode {
       dbmsQueryResult = inMemoryAggregate.executeQuery(query);
 
       // add covered blocks meta data
-      dbmsQueryResult.getMetaData().coveredCubes = aggMeta.getCubes();
+      dbmsQueryResult.getMetaData().coveredFraction = aggMeta.getCoveredFraction();
 
 //      List<Boolean> isAggregated = new ArrayList<>();
 //      for (SelectItem sel : selectQuery.getSelectList()) {

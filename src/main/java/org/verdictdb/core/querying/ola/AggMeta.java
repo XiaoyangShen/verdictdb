@@ -137,6 +137,32 @@ public class AggMeta implements Serializable {
   }
 
   /**
+   * Computes the fraction of covered cubes, considering all tiers.
+   * Used for comparing with the use original query threshold
+   *
+   * @param
+   * @return double between 0 and 1
+   */
+  public double getCoveredFraction() {
+    ScrambleMetaSet metaset =
+            ScrambleMetaSet.createFromCollection(tierColumnForScramble.keySet());
+    double fraction = 0.0;
+    for (HyperTableCube cube : cubes) {
+      fraction += coveredFractionPerCube(cube, metaset);
+    }
+    // TODO: check fraction is between 0 and 1
+    return fraction;
+  }
+
+  private double coveredFractionPerCube(HyperTableCube cube, ScrambleMetaSet metaset) {
+    double fraction = 1.0;
+    for (Dimension dim : cube.getDimensions()) {
+      fraction *= ratioOfDimensionAllTiers(dim, metaset);
+    }
+    return fraction;
+  }
+
+  /**
    * Computes the scaling ratio for a certain tier combination, which is simply the inverse of the
    * sampling probability.
    *
@@ -161,13 +187,13 @@ public class AggMeta implements Serializable {
       String schemaName = dim.getSchemaName();
       String tableName = dim.getTableName();
       int tier = tiers.getTierNumberFor(schemaName, tableName);
-      double ratioForDim = ratioOfDimension(dim, metaset, tier);
+      double ratioForDim = ratioOfDimensionOneTier(dim, metaset, tier);
       ratio *= ratioForDim;
     }
     return ratio;
   }
 
-  private double ratioOfDimension(Dimension dim, ScrambleMetaSet metaset, int tier) {
+  private double ratioOfDimensionOneTier(Dimension dim, ScrambleMetaSet metaset, int tier) {
     String schemaName = dim.getSchemaName();
     String tableName = dim.getTableName();
     int begin = dim.getBegin();
@@ -180,6 +206,26 @@ public class AggMeta implements Serializable {
       ratio = cumulDist.get(end);
     } else {
       ratio = cumulDist.get(end) - cumulDist.get(begin-1);
+    }
+    return ratio;
+  }
+
+  private double ratioOfDimensionAllTiers(Dimension dim, ScrambleMetaSet metaset) {
+    String schemaName = dim.getSchemaName();
+    String tableName = dim.getTableName();
+    int begin = dim.getBegin();
+    int end = dim.getEnd();
+    ScrambleMeta meta = metaset.getSingleMeta(schemaName, tableName);
+    int numTiers = meta.getNumberOfTiers();
+
+    double ratio = 0.0;
+    for (int tier = 0; tier < numTiers; ++tier) {
+      List<Double> cumulDist = meta.getCumulativeDistributionForTier(tier);
+      if (begin == 0) {
+        ratio += cumulDist.get(end);
+      } else {
+        ratio += cumulDist.get(end) - cumulDist.get(begin-1);
+      }
     }
     return ratio;
   }
